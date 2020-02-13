@@ -1,17 +1,47 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>bankFileGenerator</groupId>
-  <artifactId>com.bankfilegenerator</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <groupId>com.fundwave</groupId>
+  <artifactId>bankFileGenerator</artifactId>
+  <description>The project provides an easy way to create ABA files for the trades / transactions by validating the input against the standard ABA file format.</description>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>BankFileGenerator Maven Webapp</name>
+  <url>https://github.com/getfundwave/bankfilegenerator</url>
+
+  <!-- Contact for developers on project -->
+  <developers>
+      <developer>
+          <name>Rahul Sharma</name>
+          <email>webcrat.tech@gmail.com</email>
+          <organization>Fundwave</organization>
+          <organizationUrl>https://github.com/getfundwave</organizationUrl>
+      </developer>
+  </developers>
+
+  <!-- Source Control Information, Github Stuff -->
+  <scm>
+      <connection>scm:git:https://github.com/getfundwave/bankfilegenerator.git</connection>
+      <url>https://github.com/getfundwave/bankfilegenerator</url>
+      <tag>HEAD</tag>
+  </scm>
   
+  <!-- We are deploying to Sonatype, so enter Sonatype Distribution Stuff Here -->
+  <distributionManagement>
+      <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      </snapshotRepository>
+      <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+      </repository>
+  </distributionManagement>
+
   <properties>
   	<springframework.version>5.0.7.RELEASE</springframework.version>
+	<gpg.passphrase>rahul1234</gpg.passphrase>
   </properties>
-  
-  <url>http://maven.apache.org</url>
   
   <dependencies>
   
@@ -52,6 +82,7 @@
   <build>
     <finalName>BankFileGenerator</finalName>
     <plugins>
+	  
 	  <plugin>
 	    <groupId>org.apache.maven.plugins</groupId>
 	    <artifactId>maven-compiler-plugin</artifactId>
@@ -61,6 +92,112 @@
 	      <target>1.8</target>
 	    </configuration>
 	  </plugin>
+
+	  <plugin>
+		<artifactId>maven-deploy-plugin</artifactId>
+		<version>2.8.2</version>
+		<executions>
+			<execution>
+				<id>default-deploy</id>
+				<phase>deploy</phase>
+				<goals>
+				<goal>deploy</goal>
+				</goals>
+			</execution>
+		</executions>
+	  </plugin>
+
+	  <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-release-plugin</artifactId>
+		<version>2.5.3</version>
+		<configuration>
+			<localCheckout>true</localCheckout>
+			<pushChanges>false</pushChanges>
+			<mavenExecutorId>forked-path</mavenExecutorId>
+			<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+		</configuration>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.maven.scm</groupId>
+				<artifactId>maven-scm-provider-gitexe</artifactId>
+				<version>1.9.5</version>
+			</dependency>
+		</dependencies>
+	  </plugin>
+
+	  <plugin>
+		<groupId>org.sonatype.plugins</groupId>
+		<artifactId>nexus-staging-maven-plugin</artifactId>
+		<version>1.6.7</version>
+		<extensions>true</extensions>
+		<configuration>
+			<serverId>ossrh</serverId>
+			<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+			<autoReleaseAfterClose>true</autoReleaseAfterClose>
+		</configuration>
+	  </plugin>
+
+	  <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-source-plugin</artifactId>
+		<version>3.0.1</version>
+		<executions>
+			<execution>
+				<id>attach-sources</id>
+				<goals>
+				<goal>jar</goal>
+				</goals>
+			</execution>
+		</executions>
+	  </plugin>
+	
+	  <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
 	</plugins>
   </build>
+
+  <profiles>
+	<!-- GPG Signature on release -->
+	<profile>
+		<id>release-sign-artifacts</id>
+		<activation>
+			<property>
+				<name>performRelease</name>
+				<value>true</value>
+			</property>
+		</activation>
+		<build>
+			<plugins>
+				<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+							<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+  </profiles>
 </project>
