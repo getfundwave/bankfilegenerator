@@ -3,7 +3,7 @@
   <groupId>com.fundwave</groupId>
   <artifactId>bankFileGenerator</artifactId>
   <description>The project provides an easy way to create ABA files for the trades / transactions by validating the input against the standard ABA file format.</description>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>BankFileGenerator Maven Webapp</name>
   <url>https://github.com/getfundwave/bankfilegenerator</url>
@@ -22,7 +22,7 @@
   <scm>
       <connection>scm:git:https://github.com/getfundwave/bankfilegenerator.git</connection>
       <url>https://github.com/getfundwave/bankfilegenerator</url>
-      <tag>bankFileGenerator-1.0.0</tag>
+      <tag>HEAD</tag>
   </scm>
   
   <!-- We are deploying to Sonatype, so enter Sonatype Distribution Stuff Here -->
