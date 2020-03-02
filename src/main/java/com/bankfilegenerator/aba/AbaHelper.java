@@ -128,11 +128,24 @@ public class AbaHelper {
 		if(branchNumber.length() > 6) {
 			branchNumber = branchNumber.substring(0, 6);
 		}else if(branchNumber.length() < 6) {
-			branchNumber = prependZeroTillRequiredLength(branchNumber, 7);
+			branchNumber = prependZeroTillRequiredLength(branchNumber, 6);
 		}
 		//place hyphen at position 3 [Starting from 0]
 		branchNumber = branchNumber.substring(0, 3)+"-"+branchNumber.substring(3, 6);
 		return branchNumber;
+	}
+	
+	public String parseBsbFormatFilter(String bsbFormatFilter) {
+		//REQUIRED FORMAT --> XXX-YYY
+		if(bsbFormatFilter.length() == 0) return getNSpaces(7);
+		bsbFormatFilter = removeDashes(bsbFormatFilter);
+		bsbFormatFilter = removeSpaces(bsbFormatFilter);
+		if(bsbFormatFilter.length() < 6) {
+			bsbFormatFilter = prependZeroTillRequiredLength(bsbFormatFilter, 6);
+		}
+		//place hyphen at position 3 [Starting from 0]
+		bsbFormatFilter = bsbFormatFilter.substring(0, 3)+"-"+bsbFormatFilter.substring(3, 6);
+		return bsbFormatFilter;
 	}
 
 	public String parseInvestorAccountNumber(String accountNumber) {
@@ -308,7 +321,7 @@ public class AbaHelper {
 	
 	public String getTotalRecordString(AbaTotalParams abaTotalParams) {
 		return 	getRecordType(abaTotalParams.getRecordType())
-				+abaTotalParams.getBsbFormatFilter()
+				+parseBsbFormatFilter(abaTotalParams.getBsbFormatFilter())
 				+getNSpaces(12)
 				+parseAmount(abaTotalParams.getNetTotalAmount())
 				+parseAmount(abaTotalParams.getCreditTotalAmount())
