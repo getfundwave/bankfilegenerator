@@ -24,7 +24,6 @@ public class AbaTotalParams {
 	}
 	
 	@Equals(value = "999-999", name = "BSB Format Filter")
-	@Length(length = 7, name = "BSB Format Filter")
 	public String getBsbFormatFilter() {
 		return bsbFormatFilter;
 	}
