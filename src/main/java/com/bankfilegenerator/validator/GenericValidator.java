@@ -29,6 +29,10 @@ public class GenericValidator<T> {
 		this.investorName = investorName;
 	}
 	
+	private String removeDashes(String input) {
+		return input.replace("-", "");
+	}
+	
 	public GenericValidator(T obj) {
 		this.obj = obj;
 		this.investorName = "";
@@ -71,9 +75,9 @@ public class GenericValidator<T> {
 				method.setAccessible(true);
 				Length inputLengthConstriant = method.getAnnotation(Length.class);
 				int requiredLength = inputLengthConstriant.length();
-				String value = (String) method.invoke(this.obj);
+				String value = removeDashes((String) method.invoke(this.obj));
 				if(value.length() != requiredLength) {
-					throw new InputLengthException("Notice: " + this.investorName + " (" + inputLengthConstriant.name() + " must be " + requiredLength + " character long)");
+					throw new InputLengthException("Notice: " + this.investorName + " (" + inputLengthConstriant.name() + " must be " + requiredLength + " character long excluding any dashes(if any))");
 				}					
 			}
 			

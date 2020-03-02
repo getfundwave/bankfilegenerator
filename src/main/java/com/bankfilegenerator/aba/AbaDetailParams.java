@@ -45,7 +45,7 @@ public class AbaDetailParams {
 		return recordType;
 	}
 	
-	@Length(length = 7, name = "Investor BSB Code")
+	@Length(length = 6, name = "Investor BSB Code")
 	public String getInvestorBsbCode() {
 		return investorBsbCode;
 	}
@@ -76,7 +76,6 @@ public class AbaDetailParams {
 		return beneficiaryName;
 	}
 	
-	@NotEmpty(name = "Lodgement Reference")
 	public String getLodgementReference() {
 		return lodgementReference;
 	}
