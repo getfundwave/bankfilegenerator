@@ -3,7 +3,7 @@
   <groupId>com.github.getfundwave</groupId>
   <artifactId>bankFileGenerator</artifactId>
   <description>The project provides an easy way to create ABA files for the trades / transactions by validating the input against the standard ABA file format.</description>
-  <version>1.0.8</version>
+  <version>1.1.0</version>
   <packaging>jar</packaging>
   <name>BankFileGenerator Maven Webapp</name>
   <url>https://github.com/getfundwave/bankfilegenerator</url>

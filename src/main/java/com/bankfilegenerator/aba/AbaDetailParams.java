@@ -17,6 +17,8 @@ public class AbaDetailParams {
 	private String indicator;
 	private String transactionCode;
 	private BigDecimal amount;
+	private BigDecimal creditAmount;
+	private BigDecimal debitAmount;
 	private String beneficiaryName;
 	private String lodgementReference;
 	private String bsbNumber;
@@ -25,7 +27,8 @@ public class AbaDetailParams {
 	private String taxAmount;
 	
 	public AbaDetailParams(String recordType, String investorBsbCode, String investorAccountNumber, String indicator, String transactionCode,
-			BigDecimal amount, String beneficiaryName, String lodgementReference, String partnershipBsbNumber, String partnershipAccountNumber, String partnershipBeneficiaryName, String taxAmount) throws InputLengthException {
+			BigDecimal amount, String beneficiaryName, String lodgementReference, String partnershipBsbNumber, String partnershipAccountNumber, String partnershipBeneficiaryName, String taxAmount,
+			BigDecimal debitAmount, BigDecimal creditAmount) throws InputLengthException {
 		this.recordType = recordType;
 		this.investorBsbCode = investorBsbCode;
 		this.investorAccountNumber = removeSpaces(removeDashes(investorAccountNumber));
@@ -38,6 +41,8 @@ public class AbaDetailParams {
 		this.accountNumber = removeSpaces(removeDashes(partnershipAccountNumber));
 		this.remitterName = partnershipBeneficiaryName;
 		this.taxAmount = taxAmount;
+		this.debitAmount = debitAmount;
+		this.creditAmount = creditAmount;
 	}
 	
 	@MultiValue(values = {"Detail", "Descriptive", "Total"} , name = "Record Type")
@@ -104,6 +109,22 @@ public class AbaDetailParams {
 	}
 	private String removeSpaces(String input) {
 		return input.replace(" ", "");
+	}
+
+	public BigDecimal getCreditAmount() {
+		return creditAmount;
+	}
+
+	public void setCreditAmount(BigDecimal creditAmount) {
+		this.creditAmount = creditAmount;
+	}
+
+	public BigDecimal getDebitAmount() {
+		return debitAmount;
+	}
+
+	public void setDebitAmount(BigDecimal debitAmount) {
+		this.debitAmount = debitAmount;
 	}
 	
 }
