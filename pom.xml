@@ -46,7 +46,7 @@
   </distributionManagement>
 
   <properties>
-  	<springframework.version>5.2.22.RELEASE</springframework.version>
+  	<springframework.version>5.2.23.RELEASE</springframework.version>
 	<gpg.passphrase>rahul1234</gpg.passphrase>
   </properties>
   
